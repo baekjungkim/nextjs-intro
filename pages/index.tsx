@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import NavBar from "../components/NavBar";
 
 const Home = () => {
-  const [counter, setCounter] = useState(0);
   return (
     <div>
-      <h1>Home {counter}</h1>
-      <button onClick={() => setCounter((prev) => prev + 1)}>+</button>
+      <NavBar />
+      <h1>Home</h1>
     </div>
   );
 };
