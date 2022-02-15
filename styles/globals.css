@@ -11,6 +11,12 @@ a {
   text-decoration: none;
 }
 
+body {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+}
+
 * {
   box-sizing: border-box;
 }
