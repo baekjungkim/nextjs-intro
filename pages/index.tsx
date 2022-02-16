@@ -1,12 +1,22 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useRouter } from "next/router";
 
 const Home = ({ movies }: InferGetServerSidePropsType<GetServerSideProps>) => {
+  const router = useRouter();
+  const onClick = ({ movieId, title }: { movieId: number; title: string }) => {
+    router.push(`/movies/${title}/${movieId}`);
+  };
+
   return (
     <div className="container">
       {movies.map((movie: IMovieProps) => (
-        <div className="movie" key={movie.id}>
+        <div
+          className="movie"
+          key={movie.id}
+          onClick={() => onClick({ movieId: movie.id, title: movie.title })}
+        >
           <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-          <h4>{movie.original_title}</h4>
+          <h4>{movie.title}</h4>
         </div>
       ))}
       <style jsx global>{`
@@ -37,7 +47,7 @@ const Home = ({ movies }: InferGetServerSidePropsType<GetServerSideProps>) => {
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   const { results } = await (
     await fetch("http://localhost:3000/api/movies")
   ).json();
@@ -46,7 +56,7 @@ export async function getServerSideProps() {
       movies: results,
     },
   };
-}
+};
 
 interface IMovieProps {
   poster_path?: string;
